@@ -1,0 +1,319 @@
+---
+title: "Supplementary Information"
+output: pdf_document
+bibliography: references.bib
+link-citations: true
+---
+
+```{r setup, include=FALSE}
+library(readr)
+library(knitr)
+library(flextable)
+library(officer)
+
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+<br>
+
+#### Annual automation spending budget on a **per mile** basis
+
+$$
+\begin{aligned}
+annual\_automation\_spending = (fare\_per\_mile \times utilization\_rate) - (financing + licensing + insurance \\ +  maintenance + fuel + labor) 
+\end{aligned}
+$$
+
+#### Net Present Value of Automation Budget
+
+| Variable Name     | Value  | Source                  |
+|-------------------|--------|-------------------------|
+| av_tech_lifespan  | 5      | Assumption              |
+| vehicle_lifespan  | 5      | @nunes2020; @nytlc2014  |
+| discount rate (i) | 5%     | @compostella2020        |
+| mileage_annual    | 65,000 | @uitp2020; @tlc2014     |
+| fare_per_mile     | \$5.00 | @cityofchicago; @nytlc  |
+| utilization_rate  | 50%    | @cramer2016; @nunes2020 |
+
+**Year 0:** Initial investment = `total_automation_budget`
+
+**Year 1 to Vehicle Lifespan:** Annual automation spending budget
+
+**Year \> Vehicle Lifespan:** Annual automation spending budget without vehicle financing
+
+$$ total\_automation\_budget = \sum_{k=1}^{n} \frac{annual\_automation\_spending \times mileage\_annual}{(1+i)^{k}}  $$
+
+#### Financing
+
+| Variable Name              | Value    | Source                            |
+|----------------------------|----------|-----------------------------------|
+| vehicle_price              | \$28,000 | @compostella2020                  |
+| annual_interest_rate       | 7%       | @nunes2020                        |
+| vehicle_financing_lifespan | 3 years  | @nunes2020                        |
+| vehicle_lifespan           | 5        | @nunes2020                        |
+| payment_periods_per_year   | 12       | Assuming monthly payments         |
+| mileage_annual             | 65,000   | @nytlc; @uitp2020; @cityofchicago |
+
+Equations:
+
+$monthly\_loan\_payment = \frac{vehicle\_price}{([(1+i)^n - 1] \div [i(1+i)^n]}$
+
+$$ n = payment\_periods\_per\_year \times vehicle\_financing\_lifespan $$
+
+$i = \frac{annual\_interest\_rate}{months\_per\_year}$
+
+$total\_loan\_payment = monthly\_loan\_payment \times months\_per\_year \times vehicle\_financing\_duration$
+
+$financing = \frac{total\_loan\_payment}{miles\_per\_year \times vehicle\_lifespan}$
+
+<br>
+
+#### Licensing
+
+<br>
+
+It is currently unclear whether robotaxis will be regulated under taxi or Transportation Network Company guidelines, which have differing licensing costs. See below for the calculation of taxi and TNC licensing fees.
+
+<br>
+
+**Taxi Licensing - Chicago**
+
+The following costs are on a **per vehicle** basis
+
+| Variable Name                            | Value             | Source    |
+|------------------------------------------|-------------------|-----------|
+| taxi_licensing_taxi_medallion_license    | \$500 per 2 years | @bacp2020 |
+| taxi_licensing_ground_transportation_tax | \$98/month        | @bacp2020 |
+| taxi_licensing_accessibility_fund        | \$22/month        | @bacp2020 |
+| taxi_licensing_advertising_fee           | \$100/year        | @bacp2020 |
+
+Equations:
+
+$$ \begin{aligned} annual\_licensing\_taxi = taxi\_licensing\_taxi\_medallion\_license \\ + (taxi\_licensing\_ground\_transportation\_tax + taxi\_licensing\_accessibility\_fund) \times months\_per\_year \\ + taxi\_licensing\_advertising\_fee \end{aligned}$$
+
+$$ licensing = \frac{annual\_licensing\_taxi}{miles\_per\_year}$$
+
+**TNC Licensing - Chicago**
+
+The City of Chicago identified 148,351 unique TNC drivers in a recent study @bacp2023a. Only a fraction of these drivers, however, were categorized as full-time drivers. We assume robotaxis would operate on a full-time basis and thus use the mean number of full-time TNC drivers (1,313) as the fleet size for TNC licensing calculations.
+
+| Variable Name                    | Value                     | Source         |
+|------------------------------|------------------------|-----------------|
+| tnc_licensing_admin_fee_per_year | \$10,000/year per company | @bacp2020      |
+| tnc_licensing_admin_fee_per_trip | \$0.02/trip               | @bacp2020      |
+| tnc_licensing_ground_transport   | \$1/trip                  | @bacp2020      |
+| tnc_licensing_access_fund        | \$0.10/trip               | @bacp2020      |
+| tnc_licensing_advertising_fee    | \$100/year per vehicle    | @bacp2020      |
+| fleet_size                       | 1,313 vehicles            | @bacp2023a     |
+| miles_per_trip                   | 3.09 miles                | @cityofchicago |
+
+$$ \begin{aligned} licensing\_tnc = \frac{tnc\_licensing\_admin\_fee\_tnc\_per\_year}{miles\_per\_year \times fleet\_size} \\ + \frac{tnc\_licensing\_admin\_fee\_tnc\_per\_trip + tnc\_licensing\_ground\_transport\_tnc + access\_fund\_tnc}{miles\_per\_trip} \\ + \frac{tnc\_licensing\_advertising\_fee}{miles\_per\_year} \end{aligned}$$
+
+\newpage
+
+**Taxi Licensing - New York City**
+
+In New York City, taxi licensing occurs through the purchase of a taxi medallion. A down payment of 20% is applied with 25% of the down payment paid upfront and the remainder of the down payment financed over 5 years. The remaining balance is financed over 7 years.
+
+| Variable Name                | Value     | Source                              |
+|-------------------------|----------------|-------------------------------|
+| taxi_medallion_price         | \$255,000 | @newyorkcitytaxilimousinecommission |
+| downpayment_percent          | 20%       | @nunes2020                          |
+| downpayment_upfront_percent  | 25%       | @nunes2020                          |
+| financing_period_downpayment | 7 years   | @nunes2020                          |
+| financing_period_remainder   | 5 years   | @nunes2020                          |
+| medallion_interest_rate      | 5.4%      | @nunes2020                          |
+| payment_periods_per_year     | 12        | @nunes2020                          |
+| medallion_lifespan           | 20        | @nunes2020                          |
+
+Equations:
+
+$$ n_d = payment\_periods\_per\_year \times financing\_period\_downpayment $$
+
+$$ n_r = payment\_periods\_per\_year \times financing\_period\_remainder $$
+
+$i = \frac{medallion\_interest\_rate}{months\_per\_year}$
+
+$$ downpayment\_total = downpayment\_percent \times  taxi\_licensing\_taxi\_medallion\_price $$
+
+$$ downpayment\_upfront = downpayment\_upfront\_percent \times downpayment\_total $$ $$ downpayment\_remainder = downpayment\_total - downpayment\_upfront $$ $$ downpayment\_monthly\_loan\_payment = \frac{downpayment\_remainder}{([(1+i)^n_d - 1] \div [i(1+i)^n_d]}$$
+
+$$ loan\_remainder = taxi\_licensing\_taxi\_medallion\_price - downpayment\_total $$
+
+$remainder\_monthly\_loan\_payment = \frac{loan\_remainder}{([(1+i)^n_r - 1] \div [i(1+i)^n_r]}$
+
+$$ 
+\begin{aligned}
+total\_medallion\_payment = downpayment\_upfront \\ + (downpayment\_monthly\_loan\_payment \times n_d) \\ + (remainder\_monthly\_loan\_payment \times n_r) 
+\end{aligned}
+$$
+
+$licensing = \frac{total\_medallion\_payment}{miles\_per\_year \times medallion\_lifespan}$
+
+\newpage
+
+#### Insurance
+
+<br> For the base model, the `av_operations_factor` is 1. The listed `av_operations_factor` is used in the Advanced AV Tech scenario.
+
+| Variable Name                  | Value       | Source                    |
+|--------------------------------|-------------|---------------------------|
+| vehicle_operations_insurance   | \$682/month | @bodine2023; @taxiins2023 |
+| av_operations_factor_insurance | 0.5         | @fagnant2016              |
+
+Equation:
+
+$$ insurance = \frac{vehicle\_operations\_insurance \times months\_per\_year}{miles\_per\_year} \times av\_operations\_factor\_insurance $$
+
+<br>
+
+#### Maintenance
+
+<br> We assume maintenance costs are \$0.06/mi. For the base model, the `av_operations_maintenance` factor is 1. The listed `av_operations_maintenance` factor is used in the Advanced AV Tech scenario.
+
+| Variable Name                    | Value     | Source                   |
+|----------------------------------|-----------|--------------------------|
+| vehicle_operations_maintenance   | \$0.06/mi | @parrott2018; @reich2020 |
+| av_operations_factor_maintenance | 0.9       | @fagnant2016             |
+
+Equation:
+
+$$ maintenance = vehicle\_operations\_maintenance \times av\_operations\_factor\_maintenance $$ <br>
+
+#### Fuel
+
+<br>
+
+For the base model, the `av_operations_fuel` factor is 1. The listed `av_operations_fuel` factor is used in the Advanced AV Tech scenario.
+
+| Variable Name             | Value               | Source                    |
+|--------------------------|--------------------|--------------------------|
+| fuel_cost_per_gal         | \$3.829/gallon      | @aaa2023                  |
+| fuel_efficiency           | 45 miles per gallon | @epa2021                  |
+| av_operations_factor_fuel | 0.8                 | @stephens2016; @bösch2018 |
+
+Equations:
+
+$$ annual\_fuel\_cost = \frac{miles\_per\_year}{fuel\_efficiency} \times fuel\_cost\_per\_gal$$
+
+$$ fuel = \frac{annual\_fuel\_cost}{miles\_per\_year} \times av\_operations\_factor\_fuel $$
+
+<br>
+
+\newpage
+
+#### Labor
+
+Overall equation:
+
+$$ labor = cleaning + customersupport + fieldsupport + monitor $$
+
+<br>
+
+##### Cleaning
+
+<br> We assume the vehicles receive a basic cleaning daily, and a deep cleaning 3 times per week. We assume that one cleaner can perform a basic cleaning for 50 vehicles in one hour, and that one cleaner can perform a deep cleaning for 10 vehicles in 3 hours. In the City of Chicago, minimum wage is \$15.80 per hour.
+
+| Variable Name                      | Value         | Source     |
+|------------------------------------|---------------|------------|
+| shift_days_per_year_cleaner_basic  | 365 days/year | Assumption |
+| shift_days_per_year_cleaner_deep   | 156 days/year | Assumption |
+| shift_length_cleaner_basic         | 1 hour        | Assumption |
+| shift_length_cleaner_deep          | 3 hours       | Assumption |
+| vehicles_per_cluster_cleaner_basic | 12            | Assumption |
+| vehicles_per_cluster_cleaner_deep  | 10            | Assumption |
+| wage_cleaner                       | \$15.80       | @bacp2023  |
+
+Equations: $$ 
+\begin{aligned}
+cluster\_cost\_cleaner\_basic = shift\_length\_cleaner\_basic \times shift\_days\_per\_year\_cleaner\_basic \\ \times workers\_per\_shift\_cleaner\_basic \times wage\_cleaner \end{aligned}
+$$
+
+$$ 
+\begin{aligned}
+cluster\_cost\_cleaner\_deep = shift\_length\_cleaner\_deep \times shift\_days\_per\_year\_cleaner\_deep \\ \times workers\_per\_shift\_cleaner\_deep \times wage\_cleaner 
+\end{aligned} $$
+
+$$ cost\_per\_cluster\_cleaner = cluster\_cost\_cleaner\_basic + cluster\_cost\_cleaner\_deep $$
+
+$$ cleaning = \frac{cost\_per\_cluster\_cleaner}{vehicles\_per\_cluster \times miles\_per\_year} $$
+
+<br>
+
+##### Field Support
+
+| Variable Name                    | Value                   | Source      |
+|----------------------------------|-------------------------|-------------|
+| shift_days_per_year_fieldsupport | 365 days/year           | @kaplan2023 |
+| shift_length_fieldsupport        | 8 hours                 | @kaplan2023 |
+| wage_fieldsupport                | \$23/hr                 | @adecco2023 |
+| workers_per_shift_fieldsupport   | 1 per shift per cluster | Assumption  |
+| vehicles_per_cluster             | 20                      | Assumption  |
+| overhead_rate                    | 1.59                    | @nunes2020  |
+
+\newpage
+
+Equations:
+
+$$ \begin{aligned}
+fieldsupport\_per\_day = workers\_per\_shift\_fieldsupport \times \frac{hours\_per\_day}{shift\_length\_fieldsupport} \end{aligned} $$
+
+$$ \begin{aligned} cluster\_cost\_fieldsupport = (shift\_days\_per\_year\_fieldsupport \times shift\_length\_fieldsupport \\ \times wage\_fieldsupport \times overhead\_rate \times 1) \\ +
+    (shift\_days\_per\_year\_fieldsupport \times shift\_length\_fieldsupport \times wage\_fieldsupport \\ \times (fieldsupport\_per\_day - 1)) \end{aligned}$$
+
+$$ miles\_per\_cluster = vehicle\_annual\_miles \times vehicles\_per\_cluster $$
+
+$$ fieldsupport = \frac{cluster\_cost\_fieldsupport}{miles\_per\_cluster} $$
+
+##### Remote Monitor
+
+| Variable Name               | Value                   | Source         |
+|-----------------------------|-------------------------|----------------|
+| shift_days_per_year_monitor | 365 days/year           | @kaplan2023    |
+| shift_length_monitor        | 8 hours                 | @pawlowski2011 |
+| wage_monitor                | \$21/hr                 | @iconma2023    |
+| workers_per_shift_monitor   | 1 per shift per cluster | Assumption     |
+| vehicles_per_cluster        | 10                      | Assumption     |
+| overhead_rate               | 1.59                    | @nunes2020     |
+
+Equations:
+
+$$ \begin{aligned} monitor\_per\_day = workers\_per\_shift\_monitor \times \frac{hours\_per\_day}{shift\_length\_monitor} \end{aligned}$$
+
+$$ \begin{aligned} cluster\_cost\_monitor = (shift\_days\_per\_year\_monitor \times shift\_length\_monitor \\ \times wage\_monitor \times overhead\_rate \times 1) \\ +
+    (shift\_days\_per\_year\_monitor \times shift\_length\_monitor \times wage\_monitor \\ \times (monitor\_per\_day - 1)) \end{aligned}$$
+
+$$ miles\_per\_cluster = vehicle\_annual\_miles \times vehicles\_per\_cluster $$
+
+$$ monitor = \frac{cluster\_cost\_monitor}{miles\_per\_cluster} $$ <br>
+
+\newpage
+
+##### Customer Support
+
+| Variable Name                       | Value                   | Source                   |
+|------------------------------|---------------------|----------------------|
+| shift_days_per_year_customersupport | 365 days/year           | @kaplan2023              |
+| shift_length_customersupport        | 8 hours                 | @pawlowski2011           |
+| wage_customersupport                | \$21/hr                 | @indeed2023; @iconma2023 |
+| workers_per_shift_customersupport   | 1 per shift per cluster | Assumption               |
+| vehicles_per_cluster                | 50                      | Assumption               |
+| overhead_rate                       | 1.59                    | @nunes2020               |
+
+Equations:
+
+$$ customersupport\_per\_day = workers\_per\_shift\_customersupport \times \frac{hours\_per\_day}{shift\_length\_customersupport} $$
+
+$$ \begin{aligned} cluster\_cost\_customersupport = (shift\_days\_per\_year\_customersupport \times shift\_length\_customersupport \\ \times wage\_customersupport * overhead\_rate * 1) \\ + (shift\_days\_per\_year\_customersupport \times shift\_length\_customersupport \\ \times wage\_customersupport \times (customersupport\_per\_day - 1)) \end{aligned} $$
+
+$$ miles\_per\_cluster = vehicle\_annual\_miles \times vehicles\_per\_cluster $$
+
+$$ customersupport = \frac{cluster\_cost\_customersupport}{miles\_per\_cluster} $$
+
+# Detailed description of distributions
+
+Please see the si_distributions.xlsx file.
+
+\newpage
+
+## References
