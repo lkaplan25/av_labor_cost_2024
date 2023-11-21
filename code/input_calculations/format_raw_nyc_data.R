@@ -1,12 +1,12 @@
-#################################################################################################
+##############################################################################
 # About this file
-#################################################################################################
+##############################################################################
 # 
-# This script pulls the New York City taxicab data from the New York City Taxi and Limousine
-# Commission website and writes it to a parquet file. The parquet file is not included in the 
-# repo to save storage space.
+# This script pulls the New York City taxicab data from the New York City Taxi
+# and Limousine Commission website and writes it to a parquet file. The parquet
+# file is not included in the repo to save storage space.
 #
-#################################################################################################
+##############################################################################
 
 library(tidyverse)
 library(arrow)

@@ -1,12 +1,14 @@
-#################################################################################################
+##############################################################################
 # About this file
-#################################################################################################
+##############################################################################
 # 
-# This script contains the code for analyzing the 2019 Chicago taxi data. Please note 
-# that the parquet file is not stored in the repo so this script will not be able to run 
-# unless one downloads the data from the City of Chicago website (see format_raw_chicago_data.R script).
+# This script contains the code for analyzing the 2019 Chicago taxi data.
 #
-#################################################################################################
+# Please note that the parquet file is not stored in the repo so this script
+# will not be able to run unless one downloads the data from the City of
+# Chicago website (see format_raw_chicago_data.R script).
+#
+##############################################################################
 
 # install.packages(c("tidyverse", "devtools", "arrow", "lubridate))
 
