@@ -1,11 +1,17 @@
 ---
-title: "Supplementary Information"
-output: pdf_document
+title: "Appendix"
 bibliography: references.bib
 link-citations: true
+output:
+  pdf_document:
+    number_sections: false
+    includes:
+      in_header: "preamble.tex"
 ---
 
-```{r setup, include=FALSE}
+```{r setup}
+#| include: false
+
 library(readr)
 library(knitr)
 library(flextable)
@@ -14,17 +20,17 @@ library(officer)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-<br>
+This appendix includes detailed descriptions of all model equations and input assumptions.
 
-#### Annual automation spending budget on a **per mile** basis
+### Annual automation budget on a **per mile** basis
 
-$$
-\begin{aligned}
-annual\_automation\_spending = (fare\_per\_mile \times utilization\_rate) - (financing + licensing + insurance \\ +  maintenance + fuel + labor) 
-\end{aligned}
-$$
+\begin{multline}
+annual\_automation\_budget = (fare\_per\_mile \times utilization\_rate)\\ - (financing + licensing + insurance +  maintenance + fuel + labor) 
+\end{multline}
 
-#### Net Present Value of Automation Budget
+\newpage
+
+### Net Present Value of Automation Budget
 
 | Variable Name     | Value  | Source                  |
 |-------------------|--------|-------------------------|
@@ -35,15 +41,19 @@ $$
 | fare_per_mile     | \$5.00 | @cityofchicago; @nytlc  |
 | utilization_rate  | 50%    | @cramer2016; @nunes2020 |
 
-**Year 0:** Initial investment = `total_automation_budget`
+**Year 0:** Initial investment = `net_present_automation_budget`
 
-**Year 1 to Vehicle Lifespan:** Annual automation spending budget
+**Year 1 to Vehicle Lifespan:** Annual automation budget
 
-**Year \> Vehicle Lifespan:** Annual automation spending budget without vehicle financing
+**Year \> Vehicle Lifespan:** Annual automation budget without vehicle financing
 
-$$ total\_automation\_budget = \sum_{k=1}^{n} \frac{annual\_automation\_spending \times mileage\_annual}{(1+i)^{k}}  $$
+\begin{equation}
+net\_present\_automation\_budget = \sum_{k=1}^{n} \frac{annual\_automation\_budget \times mileage\_annual}{(1+i)^{k}}
+\end{equation}
 
-#### Financing
+\newpage
+
+### Financing
 
 | Variable Name              | Value    | Source                            |
 |----------------------------|----------|-----------------------------------|
@@ -56,25 +66,31 @@ $$ total\_automation\_budget = \sum_{k=1}^{n} \frac{annual\_automation\_spending
 
 Equations:
 
-$monthly\_loan\_payment = \frac{vehicle\_price}{([(1+i)^n - 1] \div [i(1+i)^n]}$
+\begin{equation}
+monthly\_loan\_payment = \frac{vehicle\_price}{([(1+i)^n - 1] \div [i(1+i)^n]}
+\end{equation}
 
-$$ n = payment\_periods\_per\_year \times vehicle\_financing\_lifespan $$
+\begin{equation}
+n = payment\_periods\_per\_year \times vehicle\_financing\_lifespan
+\end{equation}
 
-$i = \frac{annual\_interest\_rate}{months\_per\_year}$
+\begin{equation}
+i = \frac{annual\_interest\_rate}{months\_per\_year}
+\end{equation}
 
-$total\_loan\_payment = monthly\_loan\_payment \times months\_per\_year \times vehicle\_financing\_duration$
+\begin{equation}
+total\_loan\_payment = monthly\_loan\_payment \times months\_per\_year \times vehicle\_financing\_duration
+\end{equation}
 
-$financing = \frac{total\_loan\_payment}{miles\_per\_year \times vehicle\_lifespan}$
+\begin{equation}
+financing = \frac{total\_loan\_payment}{miles\_per\_year \times vehicle\_lifespan}
+\end{equation}
 
-<br>
+\newpage
 
-#### Licensing
-
-<br>
+### Licensing
 
 It is currently unclear whether robotaxis will be regulated under taxi or Transportation Network Company guidelines, which have differing licensing costs. See below for the calculation of taxi and TNC licensing fees.
-
-<br>
 
 **Taxi Licensing - Chicago**
 
@@ -89,9 +105,13 @@ The following costs are on a **per vehicle** basis
 
 Equations:
 
-$$ \begin{aligned} annual\_licensing\_taxi = taxi\_licensing\_taxi\_medallion\_license \\ + (taxi\_licensing\_ground\_transportation\_tax + taxi\_licensing\_accessibility\_fund) \times months\_per\_year \\ + taxi\_licensing\_advertising\_fee \end{aligned}$$
+\begin{multline}
+annual\_licensing\_taxi = taxi\_licensing\_taxi\_medallion\_license\\ + (taxi\_licensing\_ground\_transportation\_tax + taxi\_licensing\_accessibility\_fund) \times months\_per\_year\\ + taxi\_licensing\_advertising\_fee 
+\end{multline}
 
-$$ licensing = \frac{annual\_licensing\_taxi}{miles\_per\_year}$$
+\begin{equation}
+licensing = \frac{annual\_licensing\_taxi}{miles\_per\_year}
+\end{equation}
 
 **TNC Licensing - Chicago**
 
@@ -107,9 +127,9 @@ The City of Chicago identified 148,351 unique TNC drivers in a recent study @bac
 | fleet_size                       | 1,313 vehicles            | @bacp2023a     |
 | miles_per_trip                   | 3.09 miles                | @cityofchicago |
 
-$$ \begin{aligned} licensing\_tnc = \frac{tnc\_licensing\_admin\_fee\_tnc\_per\_year}{miles\_per\_year \times fleet\_size} \\ + \frac{tnc\_licensing\_admin\_fee\_tnc\_per\_trip + tnc\_licensing\_ground\_transport\_tnc + access\_fund\_tnc}{miles\_per\_trip} \\ + \frac{tnc\_licensing\_advertising\_fee}{miles\_per\_year} \end{aligned}$$
-
-\newpage
+\begin{multline}
+licensing\_tnc = \frac{tnc\_licensing\_admin\_fee\_tnc\_per\_year}{miles\_per\_year \times fleet\_size} \\ + \frac{tnc\_licensing\_admin\_fee\_tnc\_per\_trip + tnc\_licensing\_ground\_transport\_tnc + access\_fund\_tnc}{miles\_per\_trip} \\ + \frac{tnc\_licensing\_advertising\_fee}{miles\_per\_year} 
+\end{multline}
 
 **Taxi Licensing - New York City**
 
@@ -128,33 +148,56 @@ In New York City, taxi licensing occurs through the purchase of a taxi medallion
 
 Equations:
 
-$$ n_d = payment\_periods\_per\_year \times financing\_period\_downpayment $$
+\begin{equation}
+n_d = payment\_periods\_per\_year \times financing\_period\_downpayment
+\end{equation}
 
-$$ n_r = payment\_periods\_per\_year \times financing\_period\_remainder $$
+\begin{equation}
+n_r = payment\_periods\_per\_year \times financing\_period\_remainder
+\end{equation}
 
-$i = \frac{medallion\_interest\_rate}{months\_per\_year}$
+\begin{equation}
+i = \frac{medallion\_interest\_rate}{months\_per\_year}
+\end{equation}
 
-$$ downpayment\_total = downpayment\_percent \times  taxi\_licensing\_taxi\_medallion\_price $$
+\begin{equation}
+downpayment\_total = downpayment\_percent \times  taxi\_licensing\_taxi\_medallion\_price
+\end{equation}
 
-$$ downpayment\_upfront = downpayment\_upfront\_percent \times downpayment\_total $$ $$ downpayment\_remainder = downpayment\_total - downpayment\_upfront $$ $$ downpayment\_monthly\_loan\_payment = \frac{downpayment\_remainder}{([(1+i)^n_d - 1] \div [i(1+i)^n_d]}$$
+\begin{equation}
+downpayment\_upfront = downpayment\_upfront\_percent \times downpayment\_total
+\end{equation}
 
-$$ loan\_remainder = taxi\_licensing\_taxi\_medallion\_price - downpayment\_total $$
+\begin{equation}
+downpayment\_remainder = downpayment\_total - downpayment\_upfront
+\end{equation}
 
-$remainder\_monthly\_loan\_payment = \frac{loan\_remainder}{([(1+i)^n_r - 1] \div [i(1+i)^n_r]}$
+\begin{equation}
+downpayment\_monthly\_loan\_payment = \frac{downpayment\_remainder}{([(1+i)^n_d - 1] \div [i(1+i)^n_d]}
+\end{equation}
 
-$$ 
+\begin{equation}loan\_remainder = taxi\_licensing\_taxi\_medallion\_price - downpayment\_total
+\end{equation}
+
+\begin{equation}
+remainder\_monthly\_loan\_payment = \frac{loan\_remainder}{([(1+i)^n_r - 1] \div [i(1+i)^n_r]}
+\end{equation}
+
+\begin{equation}
 \begin{aligned}
 total\_medallion\_payment = downpayment\_upfront \\ + (downpayment\_monthly\_loan\_payment \times n_d) \\ + (remainder\_monthly\_loan\_payment \times n_r) 
 \end{aligned}
-$$
+\end{equation}
 
-$licensing = \frac{total\_medallion\_payment}{miles\_per\_year \times medallion\_lifespan}$
+\begin{equation}
+licensing = \frac{total\_medallion\_payment}{miles\_per\_year \times medallion\_lifespan}
+\end{equation}
 
 \newpage
 
-#### Insurance
+### Insurance
 
-<br> For the base model, the `av_operations_factor` is 1. The listed `av_operations_factor` is used in the Advanced AV Tech scenario.
+For the base model, the `av_operations_factor` is 1. The listed `av_operations_factor` is used in the Advanced AV Tech scenario.
 
 | Variable Name                  | Value       | Source                    |
 |--------------------------------|-------------|---------------------------|
@@ -163,13 +206,15 @@ $licensing = \frac{total\_medallion\_payment}{miles\_per\_year \times medallion\
 
 Equation:
 
-$$ insurance = \frac{vehicle\_operations\_insurance \times months\_per\_year}{miles\_per\_year} \times av\_operations\_factor\_insurance $$
+\begin{equation}
+insurance = \frac{vehicle\_operations\_insurance \times months\_per\_year}{miles\_per\_year} \times av\_operations\_factor\_insurance
+\end{equation}
 
-<br>
+\newpage
 
-#### Maintenance
+### Maintenance
 
-<br> We assume maintenance costs are \$0.06/mi. For the base model, the `av_operations_maintenance` factor is 1. The listed `av_operations_maintenance` factor is used in the Advanced AV Tech scenario.
+We assume maintenance costs are \$0.06/mi. For the base model, the `av_operations_maintenance` factor is 1. The listed `av_operations_maintenance` factor is used in the Advanced AV Tech scenario.
 
 | Variable Name                    | Value     | Source                   |
 |----------------------------------|-----------|--------------------------|
@@ -178,11 +223,13 @@ $$ insurance = \frac{vehicle\_operations\_insurance \times months\_per\_year}{mi
 
 Equation:
 
-$$ maintenance = vehicle\_operations\_maintenance \times av\_operations\_factor\_maintenance $$ <br>
+\begin{equation}
+maintenance = vehicle\_operations\_maintenance \times av\_operations\_factor\_maintenance
+\end{equation}
 
-#### Fuel
+\newpage
 
-<br>
+### Fuel
 
 For the base model, the `av_operations_fuel` factor is 1. The listed `av_operations_fuel` factor is used in the Advanced AV Tech scenario.
 
@@ -194,25 +241,27 @@ For the base model, the `av_operations_fuel` factor is 1. The listed `av_operati
 
 Equations:
 
-$$ annual\_fuel\_cost = \frac{miles\_per\_year}{fuel\_efficiency} \times fuel\_cost\_per\_gal$$
+\begin{equation}
+annual\_fuel\_cost = \frac{miles\_per\_year}{fuel\_efficiency} \times fuel\_cost\_per\_gal
+\end{equation}
 
-$$ fuel = \frac{annual\_fuel\_cost}{miles\_per\_year} \times av\_operations\_factor\_fuel $$
-
-<br>
+\begin{equation}
+fuel = \frac{annual\_fuel\_cost}{miles\_per\_year} \times av\_operations\_factor\_fuel
+\end{equation}
 
 \newpage
 
-#### Labor
+### Labor
 
 Overall equation:
 
-$$ labor = cleaning + customersupport + fieldsupport + monitor $$
+\begin{equation}
+labor = cleaning + customersupport + fieldsupport + monitor
+\end{equation}
 
-<br>
+#### Cleaning
 
-##### Cleaning
-
-<br> We assume the vehicles receive a basic cleaning daily, and a deep cleaning 3 times per week. We assume that one cleaner can perform a basic cleaning for 50 vehicles in one hour, and that one cleaner can perform a deep cleaning for 10 vehicles in 3 hours. In the City of Chicago, minimum wage is \$15.80 per hour.
+We assume the vehicles receive a basic cleaning daily, and a deep cleaning 3 times per week. We assume that one cleaner can perform a basic cleaning for 50 vehicles in one hour, and that one cleaner can perform a deep cleaning for 10 vehicles in 3 hours. In the City of Chicago, minimum wage is \$15.80 per hour.
 
 | Variable Name                      | Value         | Source     |
 |------------------------------------|---------------|------------|
@@ -224,23 +273,29 @@ $$ labor = cleaning + customersupport + fieldsupport + monitor $$
 | vehicles_per_cluster_cleaner_deep  | 10            | Assumption |
 | wage_cleaner                       | \$15.80       | @bacp2023  |
 
-Equations: $$ 
-\begin{aligned}
-cluster\_cost\_cleaner\_basic = shift\_length\_cleaner\_basic \times shift\_days\_per\_year\_cleaner\_basic \\ \times workers\_per\_shift\_cleaner\_basic \times wage\_cleaner \end{aligned}
-$$
+Equations: 
 
-$$ 
+\begin{equation}
+\begin{aligned}
+cluster\_cost\_cleaner\_basic = shift\_length\_cleaner\_basic \times shift\_days\_per\_year\_cleaner\_basic \\ \times workers\_per\_shift\_cleaner\_basic \times wage\_cleaner 
+\end{aligned}
+\end{equation}
+
+\begin{equation}
 \begin{aligned}
 cluster\_cost\_cleaner\_deep = shift\_length\_cleaner\_deep \times shift\_days\_per\_year\_cleaner\_deep \\ \times workers\_per\_shift\_cleaner\_deep \times wage\_cleaner 
-\end{aligned} $$
+\end{aligned}
+\end{equation}
 
-$$ cost\_per\_cluster\_cleaner = cluster\_cost\_cleaner\_basic + cluster\_cost\_cleaner\_deep $$
+\begin{equation}
+cost\_per\_cluster\_cleaner = cluster\_cost\_cleaner\_basic + cluster\_cost\_cleaner\_deep 
+\end{equation}
 
-$$ cleaning = \frac{cost\_per\_cluster\_cleaner}{vehicles\_per\_cluster \times miles\_per\_year} $$
+\begin{equation}
+cleaning = \frac{cost\_per\_cluster\_cleaner}{vehicles\_per\_cluster \times miles\_per\_year}
+\end{equation}
 
-<br>
-
-##### Field Support
+#### Field Support
 
 | Variable Name                    | Value                   | Source      |
 |----------------------------------|-------------------------|-------------|
@@ -251,21 +306,30 @@ $$ cleaning = \frac{cost\_per\_cluster\_cleaner}{vehicles\_per\_cluster \times m
 | vehicles_per_cluster             | 20                      | Assumption  |
 | overhead_rate                    | 1.59                    | @nunes2020  |
 
-\newpage
-
 Equations:
 
-$$ \begin{aligned}
-fieldsupport\_per\_day = workers\_per\_shift\_fieldsupport \times \frac{hours\_per\_day}{shift\_length\_fieldsupport} \end{aligned} $$
+\begin{equation}
+\begin{aligned}
+fieldsupport\_per\_day = workers\_per\_shift\_fieldsupport \times \frac{hours\_per\_day}{shift\_length\_fieldsupport} 
+\end{aligned}
+\end{equation}
 
-$$ \begin{aligned} cluster\_cost\_fieldsupport = (shift\_days\_per\_year\_fieldsupport \times shift\_length\_fieldsupport \\ \times wage\_fieldsupport \times overhead\_rate \times 1) \\ +
-    (shift\_days\_per\_year\_fieldsupport \times shift\_length\_fieldsupport \times wage\_fieldsupport \\ \times (fieldsupport\_per\_day - 1)) \end{aligned}$$
+\begin{equation}
+\begin{aligned} 
+cluster\_cost\_fieldsupport = (shift\_days\_per\_year\_fieldsupport \times shift\_length\_fieldsupport \\ \times wage\_fieldsupport \times overhead\_rate \times 1) \\ +
+    (shift\_days\_per\_year\_fieldsupport \times shift\_length\_fieldsupport \times wage\_fieldsupport \\ \times (fieldsupport\_per\_day - 1)) 
+\end{aligned}
+\end{equation}
 
-$$ miles\_per\_cluster = vehicle\_annual\_miles \times vehicles\_per\_cluster $$
+\begin{equation}
+miles\_per\_cluster = vehicle\_annual\_miles \times vehicles\_per\_cluster
+\end{equation}
 
-$$ fieldsupport = \frac{cluster\_cost\_fieldsupport}{miles\_per\_cluster} $$
+\begin{equation}
+fieldsupport = \frac{cluster\_cost\_fieldsupport}{miles\_per\_cluster}
+\end{equation}
 
-##### Remote Monitor
+#### Remote Monitor
 
 | Variable Name               | Value                   | Source         |
 |-----------------------------|-------------------------|----------------|
@@ -278,18 +342,28 @@ $$ fieldsupport = \frac{cluster\_cost\_fieldsupport}{miles\_per\_cluster} $$
 
 Equations:
 
-$$ \begin{aligned} monitor\_per\_day = workers\_per\_shift\_monitor \times \frac{hours\_per\_day}{shift\_length\_monitor} \end{aligned}$$
+\begin{equation}
+\begin{aligned} 
+monitor\_per\_day = workers\_per\_shift\_monitor \times \frac{hours\_per\_day}{shift\_length\_monitor} 
+\end{aligned}
+\end{equation}
 
-$$ \begin{aligned} cluster\_cost\_monitor = (shift\_days\_per\_year\_monitor \times shift\_length\_monitor \\ \times wage\_monitor \times overhead\_rate \times 1) \\ +
-    (shift\_days\_per\_year\_monitor \times shift\_length\_monitor \times wage\_monitor \\ \times (monitor\_per\_day - 1)) \end{aligned}$$
+\begin{equation}
+\begin{aligned} 
+cluster\_cost\_monitor = (shift\_days\_per\_year\_monitor \times shift\_length\_monitor \\ \times wage\_monitor \times overhead\_rate \times 1) \\ +
+    (shift\_days\_per\_year\_monitor \times shift\_length\_monitor \times wage\_monitor \\ \times (monitor\_per\_day - 1)) 
+\end{aligned}
+\end{equation}
 
-$$ miles\_per\_cluster = vehicle\_annual\_miles \times vehicles\_per\_cluster $$
+\begin{equation}
+miles\_per\_cluster = vehicle\_annual\_miles \times vehicles\_per\_cluster
+\end{equation}
 
-$$ monitor = \frac{cluster\_cost\_monitor}{miles\_per\_cluster} $$ <br>
+\begin{equation}
+monitor = \frac{cluster\_cost\_monitor}{miles\_per\_cluster}
+\end{equation}
 
-\newpage
-
-##### Customer Support
+#### Customer Support
 
 | Variable Name                       | Value                   | Source                   |
 |------------------------------|---------------------|----------------------|
@@ -302,17 +376,26 @@ $$ monitor = \frac{cluster\_cost\_monitor}{miles\_per\_cluster} $$ <br>
 
 Equations:
 
-$$ customersupport\_per\_day = workers\_per\_shift\_customersupport \times \frac{hours\_per\_day}{shift\_length\_customersupport} $$
+\begin{equation}
+customersupport\_per\_day = workers\_per\_shift\_customersupport \times \frac{hours\_per\_day}{shift\_length\_customersupport} 
+\end{equation}
 
-$$ \begin{aligned} cluster\_cost\_customersupport = (shift\_days\_per\_year\_customersupport \times shift\_length\_customersupport \\ \times wage\_customersupport * overhead\_rate * 1) \\ + (shift\_days\_per\_year\_customersupport \times shift\_length\_customersupport \\ \times wage\_customersupport \times (customersupport\_per\_day - 1)) \end{aligned} $$
+\begin{equation}
+\begin{aligned} cluster\_cost\_customersupport = (shift\_days\_per\_year\_customersupport \times shift\_length\_customersupport \\ \times wage\_customersupport * overhead\_rate * 1) \\ + (shift\_days\_per\_year\_customersupport \times shift\_length\_customersupport \\ \times wage\_customersupport \times (customersupport\_per\_day - 1)) 
+\end{aligned} 
+\end{equation}
 
-$$ miles\_per\_cluster = vehicle\_annual\_miles \times vehicles\_per\_cluster $$
+\begin{equation}
+miles\_per\_cluster = vehicle\_annual\_miles \times vehicles\_per\_cluster 
+\end{equation}
 
-$$ customersupport = \frac{cluster\_cost\_customersupport}{miles\_per\_cluster} $$
+\begin{equation}
+customersupport = \frac{cluster\_cost\_customersupport}{miles\_per\_cluster}
+\end{equation}
 
-# Detailed description of distributions
+# Description of Monte Carlo simulation inputs
 
-Please see the si_distributions.xlsx file.
+Please see the `inputs_monte_carlo.xlsx` file.
 
 \newpage
 
