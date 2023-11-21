@@ -8,9 +8,9 @@
 #
 #################################################################################################
 
-source(here::here('model', 'setup.R'))
-source(here::here('model', 'functions.R'))
-source(here::here('model', 'inputs.R'))
+source(here::here('model', '0_setup.R'))
+source(here::here('model', '1_functions.R'))
+source(here::here('model', '2_inputs.R'))
 
 # MC analysis ----
 
@@ -750,7 +750,8 @@ for (i in 1:length(inputs_names)) {
 }
 
 # Exclude time conversion variables
-names_exclude <- list('weeks_per_year', 'months_per_year', 'hours_per_day')
+names_exclude <- list('weeks_per_year', 'months_per_year', 'hours_per_day', 'shift_days_per_year_monitor', 
+                      'shift_days_per_year_fieldsupport', 'shift_days_per_year_customersupport','shift_days_per_year_cleaner_basic')
 results <- results %>% 
   filter(!(results$input_name %in% names_exclude))
 
