@@ -8,9 +8,9 @@
 #
 #################################################################################################
 
-source(here::here('model', '0_setup.R'))
-source(here::here('model', '1_functions.R'))
-source(here::here('model', '2_inputs.R'))
+source(here::here('code', '0_setup.R'))
+source(here::here('code', '1_functions.R'))
+source(here::here('code', '2_inputs.R'))
 
 # MC analysis ----
 

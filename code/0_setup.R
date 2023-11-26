@@ -39,3 +39,6 @@ color_vline <- "#009E73"
 color_hline <- "#E69F00"
 color_advanced <- "steelblue"
 color_baseline <- "#999999"
+
+# Set random seed
+set.seed(1234)
