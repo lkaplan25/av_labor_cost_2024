@@ -34,11 +34,9 @@ library(colorspace)
 options(dplyr.width = Inf)
 
 # Plot settings 
-font_main <- "Roboto Condensed"
-color_vline <- "#009E73"
-color_hline <- "#E69F00"
+font_main      <- "Fira Sans Condensed"
+color_vline    <- "#009E73"
+color_hline    <- "#E69F00"
 color_advanced <- "steelblue"
 color_baseline <- "#999999"
-
-# Set random seed
-set.seed(1234)
+color_taxi     <- "#c994c7"
